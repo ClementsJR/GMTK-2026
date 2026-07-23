@@ -3,9 +3,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BobberGame : MonoBehaviour
+public class BobberInteraction : MonoBehaviour
 {
     public bool isHeld = false;
+    public int decrementValue;
+    public int incrementValue;
     [SerializeField] private Slider bobber;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,7 +24,7 @@ public class BobberGame : MonoBehaviour
     }
     public void raiseBobber()
     {
-        bobber.value += 2;
+        bobber.value += incrementValue;
     }
 
     // Update is called once per frame
@@ -34,7 +36,16 @@ public class BobberGame : MonoBehaviour
         }
         if(bobber.value != 0 && bobber.value > 0)
         {
-            bobber.value -= 1;
+            bobber.value -= decrementValue;
+        }
+
+        if(bobber.value < 0)
+        {
+            bobber.value = 0;
+        }
+        else if(bobber.value > bobber.maxValue)
+        {
+            bobber.value = bobber.maxValue;
         }
     }
 }
