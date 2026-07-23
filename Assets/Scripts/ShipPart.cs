@@ -1,16 +1,17 @@
 using UnityEngine;
 
-public class ShipPart : MonoBehaviour
-{
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+public class ShipPart : MonoBehaviour {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	private Vector3 baseRotation;
+	private Rigidbody physicsBody;
+
+	void Start() {
+		baseRotation = transform.eulerAngles;
+		physicsBody = GetComponent<Rigidbody>();
+	}
+
+	public void Explode(float blastForce, Vector3 blastCenter, float blastRadius) {
+		physicsBody.isKinematic = false;
+		physicsBody.AddExplosionForce(blastForce, blastCenter, blastRadius);
+	}
 }
