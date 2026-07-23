@@ -10,12 +10,16 @@ public class Ship : MonoBehaviour {
 	public Vector3 center;
 
 	public void ExplodeParts() {
-        if (center == null) center = transform.position;
-
         foreach (var part in parts) {
             part.Explode(force, center, radius);
         }
     }
+
+    public void SettleParts() {
+		foreach (var part in parts) {
+			part.Settle();
+		}
+	}
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

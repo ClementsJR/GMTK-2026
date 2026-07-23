@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour {
 
-    public float time = 15f;
+    public float time = 20f;
     public float timeToExplosion = 5f;
+    public float workTime = 10f;
     private bool exploded = false;
+    private bool partsSettled = false;
 
     public Ship ship;
     public TextMeshProUGUI timerLabel;
@@ -22,6 +24,11 @@ public class Timer : MonoBehaviour {
 		UpdateTimerDisplay();
         if (time <= 0) {
             // Blast off
+        }
+
+        if (time <= workTime && !partsSettled) {
+            partsSettled = true;
+            ship.SettleParts();
         }
 
         timeToExplosion -= Time.deltaTime;
