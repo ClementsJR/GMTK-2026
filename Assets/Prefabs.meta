@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 38c869f46d4e5c64e977d9a95064dfc4
+=======
+guid: 7f4fc6b893162f24c8379319917f9c44
+>>>>>>> 28dc6da (Input and bootstrap scene.)
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
