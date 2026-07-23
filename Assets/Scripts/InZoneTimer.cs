@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -17,6 +18,14 @@ public class InZoneTimer : MonoBehaviour
         {
             zone = this.GetComponent<BoxCollider2D>();
         }
+        ZonePlacement();
+    }
+
+    private void ZonePlacement()
+    {
+        float goalPos = UnityEngine.Random.Range(-40, 78);
+        //Current top position is Y 78 top and Y -40 bottom not best solution, but works
+        this.transform.localPosition = new Vector2(0, goalPos);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -49,6 +58,7 @@ public class InZoneTimer : MonoBehaviour
             else if(currTimer == 0 || currTimer < 0)
             {
                 isTimerRunning = false;
+                Debug.Log("Timer ran out, invoking timer end event");//TODO remove when done
                 timerEnd.Invoke();
             }
         }
