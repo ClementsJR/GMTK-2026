@@ -4,25 +4,30 @@ using UnityEngine.InputSystem;
 public class ScreenClickInteractor : MonoBehaviour
 {
     [SerializeField] private InputActionReference actionRef;
-    
+
     private GameObject InteractCast()
     {
-        UnityEngine.Vector2 screenPosition = Mouse.current.position.ReadValue();
-        RaycastHit hit;
+        Vector2 screenPosition = Mouse.current.position.ReadValue();
+        Ray ray = Camera.main.ScreenPointToRay(screenPosition);
 
-        if (Physics.Raycast(screenPosition, Vector3.forward, out hit, Mathf.Infinity))
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
             Debug.Log("Found an object - distance: " + hit.distance);
+            return hit.collider.gameObject;
         }
-        return this.gameObject;
-    }
-    
-    private void FixedUpdate()
-    {
-        if (actionRef.action.inProgress)
-        {
-            Debug.Log(InteractCast().name);//TODO remove when done
 
+        return null;
+    }
+
+    private void Update()
+    {
+        if (actionRef.action.WasPerformedThisFrame())
+        {
+            GameObject hitObject = InteractCast();
+            if (hitObject != null)
+            {
+                Debug.Log(hitObject.name); //TODO remove when done
+            }
         }
     }
 }
