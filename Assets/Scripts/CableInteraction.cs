@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,6 +12,8 @@ public class CableInteraction : MonoBehaviour
     private bool isFollowingHand = false;
     [SerializeField] private InputActionReference actionRef;
     [SerializeField] GameObject[] sources;
+    [SerializeField] Transform[] destinationPositions;
+    [SerializeField] private List<GameObject> destinations;
     public UnityEvent onConnectionsComplete;
     private GameObject InteractCast()
     {
@@ -17,12 +21,41 @@ public class CableInteraction : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(screenPosition);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
-            Debug.Log("Found an object - distance: " + hit.distance);
             return hit.collider.gameObject;
         }
         return null;
     }
 
+    private bool checkColliders()
+    {
+        for (int i = 0; i < sources.Length; i++)
+        {
+            if (sources[i].GetComponent<Collider>().enabled == true)
+            {
+                return false;
+            }
+            else
+            {
+                continue;
+            }
+        }
+        return true;
+    }
+
+    private void jumbleCables()
+    {
+        int i = 0;
+        while (destinations.Count > 0)
+        {
+            int rand = Random.Range(0, destinations.Count);
+            if (destinationPositions[i].transform.childCount == 0)
+            {
+                Instantiate(destinations[rand], destinationPositions[i]);
+                i++;
+                destinations.RemoveAt(rand);
+            }
+        }
+    }
     public void AttachToTarget(GameObject targetToAttach)
     {
         //This works, but allows for sources to connect to sources. If there is time, this should change
@@ -36,7 +69,6 @@ public class CableInteraction : MonoBehaviour
 
             if (checkColliders())
             {
-                Debug.Log("Cables complete!");//TODO remove when done
                 onConnectionsComplete.Invoke();
             }
         }
@@ -48,20 +80,9 @@ public class CableInteraction : MonoBehaviour
         isFollowingHand = false;
     }
 
-    private bool checkColliders()
+    private void Start()
     {
-        for(int i = 0; i < sources.Length; i++)
-        {
-            if (sources[i].GetComponent<Collider>().enabled == true)
-            {
-                return false;
-            }
-            else
-            {
-                continue;
-            }
-        }
-        return true;
+        jumbleCables();
     }
 
     void Update()
