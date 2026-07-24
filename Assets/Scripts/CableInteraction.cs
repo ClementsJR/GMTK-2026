@@ -3,40 +3,62 @@ using UnityEngine.InputSystem;
 
 public class CableInteraction : MonoBehaviour
 {
-    private LineRenderer lineRenderer;
+    private LineRenderer activeLineRenderer;
     public float distanceFromCamera = 10f;
     private bool isFollowingHand = false;
-    
-    public void toggleFollowHand()
+    [SerializeField] private InputActionReference actionRef;
+
+    private GameObject InteractCast()
     {
-        isFollowingHand = !isFollowingHand;
+        Vector2 screenPosition = Mouse.current.position.ReadValue();
+        Ray ray = Camera.main.ScreenPointToRay(screenPosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+        {
+            Debug.Log("Found an object - distance: " + hit.distance);
+            return hit.collider.gameObject;
+        }
+        return null;
     }
 
-    public void AttachToTarget(GameObject targatToAttach)
+    public void AttachToTarget(GameObject targetToAttach)
     {
-        lineRenderer.SetPosition(0, transform.position);
-        lineRenderer.SetPosition(1, targatToAttach.transform.position);
-    }
-    
-    
-    void Start()
-    {
-        lineRenderer = GetComponent<LineRenderer>();
+        Material targetMat = targetToAttach.GetComponent<Renderer>().material;
+        Material sourceMat = activeLineRenderer.gameObject.GetComponent<Renderer>().material;
+        if (targetMat == sourceMat)
+        {
+            activeLineRenderer.SetPosition(0, activeLineRenderer.gameObject.transform.position);
+            activeLineRenderer.SetPosition(1, targetToAttach.transform.position);
+        }
+        isFollowingHand = false;
     }
 
     void Update()
     {
-        if (isFollowingHand)
+        if (actionRef.action.WasPerformedThisFrame())
         {
-            lineRenderer.SetPosition(0, transform.position);
+            GameObject hitObject = InteractCast();
+            if (hitObject != null)
+            {
+                LineRenderer hitLineRenderer = hitObject.GetComponent<LineRenderer>();
+
+                if (hitLineRenderer != null)
+                {
+                    activeLineRenderer = hitLineRenderer;
+                    isFollowingHand = true;
+                }
+                else if (isFollowingHand)
+                {
+                    AttachToTarget(hitObject);
+                }
+            }
+        }
+        if (isFollowingHand && activeLineRenderer != null)
+        {
+            activeLineRenderer.SetPosition(0, activeLineRenderer.gameObject.transform.position);
             Vector3 cursorPos = Mouse.current.position.ReadValue();
             cursorPos.z = distanceFromCamera;
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(cursorPos);
-            lineRenderer.SetPosition(1, mouseWorldPos);
-        }
-        else
-        {
-            return;
+            activeLineRenderer.SetPosition(1, mouseWorldPos);
         }
     }
 }
