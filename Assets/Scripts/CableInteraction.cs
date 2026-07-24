@@ -1,4 +1,6 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class CableInteraction : MonoBehaviour
@@ -7,7 +9,8 @@ public class CableInteraction : MonoBehaviour
     public float distanceFromCamera = 10f;
     private bool isFollowingHand = false;
     [SerializeField] private InputActionReference actionRef;
-
+    [SerializeField] GameObject[] sources;
+    public UnityEvent onConnectionsComplete;
     private GameObject InteractCast()
     {
         Vector2 screenPosition = Mouse.current.position.ReadValue();
@@ -22,14 +25,43 @@ public class CableInteraction : MonoBehaviour
 
     public void AttachToTarget(GameObject targetToAttach)
     {
+        //This works, but allows for sources to connect to sources. If there is time, this should change
         Material targetMat = targetToAttach.GetComponent<Renderer>().material;
         Material sourceMat = activeLineRenderer.gameObject.GetComponent<Renderer>().material;
-        if (targetMat == sourceMat)
+        if (targetMat.color == sourceMat.color && !targetToAttach.GetComponent<LineRenderer>())
         {
             activeLineRenderer.SetPosition(0, activeLineRenderer.gameObject.transform.position);
             activeLineRenderer.SetPosition(1, targetToAttach.transform.position);
+            activeLineRenderer.gameObject.GetComponent<Collider>().enabled = false;
+
+            if (checkColliders())
+            {
+                Debug.Log("Cables complete!");//TODO remove when done
+                onConnectionsComplete.Invoke();
+            }
+        }
+        else
+        {
+            activeLineRenderer.SetPosition(0, Vector3.zero);
+            activeLineRenderer.SetPosition(1, Vector3.zero);
         }
         isFollowingHand = false;
+    }
+
+    private bool checkColliders()
+    {
+        for(int i = 0; i < sources.Length; i++)
+        {
+            if (sources[i].GetComponent<Collider>().enabled == true)
+            {
+                return false;
+            }
+            else
+            {
+                continue;
+            }
+        }
+        return true;
     }
 
     void Update()
