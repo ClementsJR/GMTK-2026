@@ -1926,6 +1926,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1056062291}
+  - component: {fileID: 1056062292}
   m_Layer: 5
   m_Name: goals
   m_TagString: Untagged
@@ -1956,6 +1957,23 @@ RectTransform:
   m_AnchoredPosition: {x: -41.5, y: 62.500008}
   m_SizeDelta: {x: 848.757, y: 406.75702}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1056062292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056062290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73eecea75375c84419824454a4e75dcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MG3ZoneMixer
+  zones:
+  - {fileID: 531383340}
+  - {fileID: 743772894}
+  - {fileID: 1971472733}
+  - {fileID: 459756312}
 --- !u!1 &1096140316
 GameObject:
   m_ObjectHideFlags: 0
