@@ -7,7 +7,7 @@ public class ShipPart : MonoBehaviour {
 
 	void Start() {
 		baseRotation = transform.eulerAngles;
-		physicsBody = GetComponent<Rigidbody>();
+		physicsBody = GetComponentInChildren<Rigidbody>();
 	}
 
 	public void Explode(float blastForce, Vector3 blastCenter, float blastRadius) {
