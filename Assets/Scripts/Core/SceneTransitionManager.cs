@@ -7,6 +7,12 @@ public class SceneTransitionManager : MonoBehaviour
 {
     public static SceneTransitionManager Instance;
 
+    public bool IsMinigameActive { get; private set; }
+
+    private Scene _loadedMinigameScene;
+
+    private Scene _currentScene;
+
     private void Awake()
     {
         // Singleton pattern (jam-safe version)
@@ -28,6 +34,8 @@ public class SceneTransitionManager : MonoBehaviour
         // Fade in when the game first starts
         FadeManager.Instance.FadeIn();
 
+        _currentScene = SceneManager.GetActiveScene();
+
         DebugManager.Log(this, "Start Finished");
 
     }
@@ -37,6 +45,8 @@ public class SceneTransitionManager : MonoBehaviour
     {
         AudioManager.Instance.StopAllClips();
         SceneManager.LoadScene(p_sSceneName);
+
+        _currentScene = SceneManager.GetSceneByName(p_sSceneName);
     }
 
 
@@ -54,9 +64,12 @@ public class SceneTransitionManager : MonoBehaviour
         yield return new WaitForSeconds(p_fDelay);
         AudioManager.Instance.StopAllClips();
         SceneManager.LoadScene(p_sSceneName);
+
+        _currentScene = SceneManager.GetSceneByName(p_sSceneName);
         yield return null;
 
-        yield return InitSceneIfAvailable();
+        //yield return InitSceneIfAvailable();
+        yield return InitScene(_currentScene);
     }
 
 
@@ -79,11 +92,14 @@ public class SceneTransitionManager : MonoBehaviour
 
         SceneManager.LoadScene(p_sSceneName);
 
+        _currentScene = SceneManager.GetSceneByName(p_sSceneName);
+
         // Wait one frame so the new scene initializes
         yield return null;
 
 
-        yield return InitSceneIfAvailable();
+        //yield return InitSceneIfAvailable();
+        yield return InitScene(_currentScene);
 
     }
 
@@ -137,6 +153,9 @@ public class SceneTransitionManager : MonoBehaviour
             yield return null;
         }
 
+        _currentScene = SceneManager.GetSceneByName(p_sSceneName);
+
+
         //Activate new loaded scene
         DebugManager.Log(this, p_sSceneName + " -- Activating Scene");
         op.allowSceneActivation = true;
@@ -155,7 +174,8 @@ public class SceneTransitionManager : MonoBehaviour
         yield return null;
 
 
-        yield return InitSceneIfAvailable();
+        //yield return InitSceneIfAvailable();
+        yield return InitScene(_currentScene);
 
 
 
@@ -171,6 +191,105 @@ public class SceneTransitionManager : MonoBehaviour
             DebugManager.Log(this, "Calling Initialize on -- " + controller.ToString());
             yield return controller.Initialize();
         }
+    }
+
+    private IEnumerator InitScene(Scene scene)
+    {
+        
+        while (!scene.isLoaded || scene.rootCount == 0)
+        {
+            DebugManager.Log(this, "Waiting to init " + scene.name);
+            yield return null;
+        }
+
+        foreach (GameObject root in scene.GetRootGameObjects())
+        {
+            var controllers = root.GetComponentsInChildren<ISceneInitializable>(true);
+
+            foreach (var controller in controllers)
+            {
+                yield return controller.Initialize();
+            }
+        }
+    }
+
+
+    public bool LoadMinigame(string sceneName)
+    {
+        if (IsMinigameActive)
+            return false;
+
+
+        IsMinigameActive = true;
+
+        StartCoroutine(LoadMinigameRoutine(sceneName));
+
+        return IsMinigameActive;
+    }
+
+    private IEnumerator LoadMinigameRoutine(string sceneName)
+    {
+        yield return FadeManager.Instance.FadeOutCoroutine();
+
+        PauseGameplayScene();
+
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+
+        while (!operation.isDone)
+            yield return null;
+
+        _loadedMinigameScene = SceneManager.GetSceneByName(sceneName);
+
+        SceneManager.SetActiveScene(_loadedMinigameScene);
+
+        yield return null;
+
+        //yield return InitSceneIfAvailable();
+        yield return InitScene(_loadedMinigameScene);
+
+        yield return FadeManager.Instance.FadeInCoroutine();
+    }
+
+    private void PauseGameplayScene()
+    {
+        var systems = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IPausableGameplay>();
+
+        foreach (var system in systems)
+            system.PauseGameplay();
+    }
+
+    private void ResumeGameplayScene()
+    {
+        Debug.Log("Unpausing");
+        var systems = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IPausableGameplay>();
+
+        foreach (var system in systems)
+            system.ResumeGameplay();
+    }
+
+    public void EndMinigame()
+    {
+        StartCoroutine(UnloadMinigameRoutine());
+    }
+
+    private IEnumerator UnloadMinigameRoutine()
+    {
+        yield return FadeManager.Instance.FadeOutCoroutine();
+
+        string sceneName = _loadedMinigameScene.name;
+
+        AsyncOperation operation = SceneManager.UnloadSceneAsync(_loadedMinigameScene);
+
+        while (!operation.isDone)
+            yield return null;
+
+        SceneManager.SetActiveScene(_currentScene);
+
+        ResumeGameplayScene();
+
+        IsMinigameActive = false;
+
+        yield return FadeManager.Instance.FadeInCoroutine();
     }
 
 

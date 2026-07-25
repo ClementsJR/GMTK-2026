@@ -602,7 +602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1f87246e8128e54ebc56446bb9d2182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_sNextSceneName: Level 1
+  m_sNextSceneName: SampleScene
 --- !u!1 &605418826
 GameObject:
   m_ObjectHideFlags: 0
@@ -1173,11 +1173,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 250.0001}
   m_SizeDelta: {x: 500, y: 499.9998}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!82 &1125325117 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 8672278786063037454, guid: 409c6d0d5cd078c458171fb5e631ccd6, type: 3}
-  m_PrefabInstance: {fileID: 1770290720205278607}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1221902205
 GameObject:
   m_ObjectHideFlags: 0
@@ -1618,11 +1613,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1670803186}
   m_CullTransparentMesh: 1
---- !u!82 &1907725261 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 824366466244900189, guid: 409c6d0d5cd078c458171fb5e631ccd6, type: 3}
-  m_PrefabInstance: {fileID: 1770290720205278607}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1934159654
 GameObject:
   m_ObjectHideFlags: 0
@@ -1702,17 +1692,6 @@ MonoBehaviour:
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
---- !u!114 &2010308917 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1400673636094026617, guid: 409c6d0d5cd078c458171fb5e631ccd6, type: 3}
-  m_PrefabInstance: {fileID: 1770290720205278607}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2071582011
 GameObject:
   m_ObjectHideFlags: 0
@@ -1788,11 +1767,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2071582011}
   m_CullTransparentMesh: 1
---- !u!82 &2123347493 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 9196608518293905603, guid: 409c6d0d5cd078c458171fb5e631ccd6, type: 3}
-  m_PrefabInstance: {fileID: 1770290720205278607}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1770290720205278607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1848,11 +1822,11 @@ PrefabInstance:
     - target: {fileID: 4632629998299750800, guid: 409c6d0d5cd078c458171fb5e631ccd6, type: 3}
       propertyPath: m_ctrlFadeController
       value: 
-      objectReference: {fileID: 1770290720205278608}
+      objectReference: {fileID: 0}
     - target: {fileID: 5914736944251709657, guid: 409c6d0d5cd078c458171fb5e631ccd6, type: 3}
       propertyPath: m_imgFadeImage
       value: 
-      objectReference: {fileID: 2010308917}
+      objectReference: {fileID: 0}
     - target: {fileID: 5997888636818240278, guid: 409c6d0d5cd078c458171fb5e631ccd6, type: 3}
       propertyPath: m_bEnableDebugLogs
       value: 1
@@ -1864,31 +1838,20 @@ PrefabInstance:
     - target: {fileID: 9056528741572893709, guid: 409c6d0d5cd078c458171fb5e631ccd6, type: 3}
       propertyPath: m_asMusicSource
       value: 
-      objectReference: {fileID: 1125325117}
+      objectReference: {fileID: 0}
     - target: {fileID: 9056528741572893709, guid: 409c6d0d5cd078c458171fb5e631ccd6, type: 3}
       propertyPath: m_asEffectSource
       value: 
-      objectReference: {fileID: 1907725261}
+      objectReference: {fileID: 0}
     - target: {fileID: 9056528741572893709, guid: 409c6d0d5cd078c458171fb5e631ccd6, type: 3}
       propertyPath: m_asNarrationSource
       value: 
-      objectReference: {fileID: 2123347493}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 409c6d0d5cd078c458171fb5e631ccd6, type: 3}
---- !u!114 &1770290720205278608 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5914736944251709657, guid: 409c6d0d5cd078c458171fb5e631ccd6, type: 3}
-  m_PrefabInstance: {fileID: 1770290720205278607}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24009ff0636aa9e4f90f8982620bbf27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

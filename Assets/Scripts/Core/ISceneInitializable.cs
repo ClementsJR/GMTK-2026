@@ -6,3 +6,9 @@ public interface ISceneInitializable
 {
     IEnumerator Initialize();
 }
+
+public interface IPausableGameplay
+{
+    void PauseGameplay();
+    void ResumeGameplay();
+}
