@@ -608,7 +608,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   messPrefab: {fileID: 1187858561955787577, guid: 493373f6e37983c46ab3440d79dd3964, type: 3}
-  numOfMessesToSpawn: 3
+  numOfMessesToSpawn: 15
   onMessCleaned:
     m_PersistentCalls:
       m_Calls: []
