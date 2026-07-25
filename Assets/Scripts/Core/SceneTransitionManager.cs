@@ -3,6 +3,14 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Linq;
 
+
+public class MinigameResult
+{
+    public bool Success;
+    // public int Score;
+    // public float Time;
+}
+
 public class SceneTransitionManager : MonoBehaviour
 {
     public static SceneTransitionManager Instance;
@@ -10,6 +18,8 @@ public class SceneTransitionManager : MonoBehaviour
     public bool IsMinigameActive { get; private set; }
 
     private Scene _loadedMinigameScene;
+
+    private System.Action<MinigameResult> _onMinigameFinished;
 
     private Scene _currentScene;
 
@@ -214,13 +224,15 @@ public class SceneTransitionManager : MonoBehaviour
     }
 
 
-    public bool LoadMinigame(string sceneName)
+    public bool LoadMinigame(string sceneName, System.Action<MinigameResult> onFinished)
     {
         if (IsMinigameActive)
             return false;
 
 
         IsMinigameActive = true;
+
+        _onMinigameFinished = onFinished;
 
         StartCoroutine(LoadMinigameRoutine(sceneName));
 
@@ -267,12 +279,12 @@ public class SceneTransitionManager : MonoBehaviour
             system.ResumeGameplay();
     }
 
-    public void EndMinigame()
+    public void EndMinigame(MinigameResult result)
     {
-        StartCoroutine(UnloadMinigameRoutine());
+        StartCoroutine(UnloadMinigameRoutine(result));
     }
 
-    private IEnumerator UnloadMinigameRoutine()
+    private IEnumerator UnloadMinigameRoutine(MinigameResult result)
     {
         yield return FadeManager.Instance.FadeOutCoroutine();
 
@@ -288,6 +300,9 @@ public class SceneTransitionManager : MonoBehaviour
         ResumeGameplayScene();
 
         IsMinigameActive = false;
+
+        _onMinigameFinished?.Invoke(result);
+        _onMinigameFinished = null;
 
         yield return FadeManager.Instance.FadeInCoroutine();
     }

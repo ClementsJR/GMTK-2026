@@ -19,7 +19,11 @@ public class MG1Controller : MonoBehaviour, ISceneInitializable
     public void EndMinigame()
     {
 
-        SceneTransitionManager.Instance.EndMinigame();
+        SceneTransitionManager.Instance.EndMinigame(
+            new MinigameResult
+            {
+                Success = true
+            });
 
     }
 

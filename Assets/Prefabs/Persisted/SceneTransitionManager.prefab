@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10fa27065d1968149a1a9d2583aa37ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ctrlFadeController: {fileID: 4216713933671738569}
 --- !u!114 &4216713933671738569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_imgFadeImage: {fileID: 8926603208748607337}
-  m_fFadeDuration: 1
+  m_fFadeDuration: 0.4
 --- !u!1 &7782035578046581563
 GameObject:
   m_ObjectHideFlags: 0
