@@ -19,7 +19,6 @@ public class MessSpawner : MonoBehaviour
         }
         else
         {
-            Debug.Log("All messes cleaned");//TODO remove when done
             onMessCleaned.Invoke();
         }
     }
