@@ -783,6 +783,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShipPart
   bodyCollider: {fileID: 1732547463}
   targetCollider: {fileID: 561922282}
+  MinigameName: MG1
+  force: 1
+  radius: 1
+  center: {x: 0, y: 0, z: -0.5}
 --- !u!1 &593450958
 GameObject:
   m_ObjectHideFlags: 0
@@ -1587,6 +1591,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShipPart
   bodyCollider: {fileID: 8362715562069086285}
   targetCollider: {fileID: 1264896783}
+  MinigameName: MG2
+  force: 1
+  radius: 1
+  center: {x: 0, y: 0, z: -0.5}
 --- !u!135 &1264896783
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3043,6 +3051,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShipPart
   bodyCollider: {fileID: 1321409924}
   targetCollider: {fileID: 1901517327}
+  MinigameName: 
+  force: 1
+  radius: 5
+  center: {x: 0, y: 0, z: 0}
 --- !u!4 &1901517326
 Transform:
   m_ObjectHideFlags: 0

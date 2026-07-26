@@ -1,4 +1,5 @@
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class ShipPart : MonoBehaviour {
@@ -14,7 +15,14 @@ public class ShipPart : MonoBehaviour {
 	public Collider bodyCollider;
 	public Collider targetCollider;
 
-	void Start() {
+	public string MinigameName;
+
+    [Header("Fail Explosion Params")]
+    public float force = 1f;
+    public float radius = 5f;
+    public Vector3 center;
+
+    void Start() {
 		physicsBody = GetComponentInChildren<Rigidbody>();
 		targetRotation = physicsBody.transform.eulerAngles;
 		targetPosition = physicsBody.transform.position;
@@ -81,6 +89,19 @@ public class ShipPart : MonoBehaviour {
 	}
 
 	private void StartMiniGame() {
+        SceneTransitionManager.Instance.LoadMinigame(MinigameName, OnMinigameFinished);
+    }
 
-	}
+    private void OnMinigameFinished(MinigameResult result)
+    {
+        if (result.Success)
+        {
+            DebugManager.Log(this, "Player reatatched part!");
+        }
+        else
+        {
+            DebugManager.Log(this, "Player failed to reatatched part!");
+            Explode(force, center, radius);
+        }
+    }
 }

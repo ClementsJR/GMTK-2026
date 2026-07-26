@@ -199,16 +199,8 @@ MonoBehaviour:
   m_imgSplashImage: {fileID: 1077869583}
   m_arrSplashScreens:
   - backgroundColor: {r: 0.3882353, g: 0.7800923, b: 0.8018868, a: 1}
-    image: {fileID: 21300000, guid: 42da22a9bde872e4f8824770adf76f96, type: 3}
-    audioClip: {fileID: 8300000, guid: e53a0622c7f8d664c8718e59b6d97f38, type: 3}
-    duration: 3
-  - backgroundColor: {r: 1, g: 0.6951165, b: 0.4198113, a: 1}
-    image: {fileID: 21300000, guid: 42da22a9bde872e4f8824770adf76f96, type: 3}
-    audioClip: {fileID: 8300000, guid: e53a0622c7f8d664c8718e59b6d97f38, type: 3}
-    duration: 10
-  - backgroundColor: {r: 0.82277507, g: 0.6839622, b: 1, a: 1}
-    image: {fileID: 21300000, guid: 42da22a9bde872e4f8824770adf76f96, type: 3}
-    audioClip: {fileID: 8300000, guid: e53a0622c7f8d664c8718e59b6d97f38, type: 3}
+    image: {fileID: 21300000, guid: 6dc3ca841c6618f49b361df3df386f30, type: 3}
+    audioClip: {fileID: 8300000, guid: e765da1fe2ae46b41afc6d462d74fbb8, type: 3}
     duration: 3
   m_sNextSceneName: MainMenuScene
 --- !u!1001 &400268373

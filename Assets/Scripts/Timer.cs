@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -68,5 +69,14 @@ public class Timer : MonoBehaviour {
 
     private void LevelFail() {
 		stageDIrectionLabel.text = "The ship left without us!";
+
+        StartCoroutine(DelayedLoad(2.0f));
+        
 	}
+
+    private IEnumerator DelayedLoad(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        SceneTransitionManager.Instance.FadeLoadingScene("MainMenuScene", false);
+    }
 }
