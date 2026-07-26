@@ -43,6 +43,8 @@ public class ShipPart : MonoBehaviour {
 	}
 
 	public void PickUp(Player player) {
+		if (reattached) return;
+
 		this.player = player;
 		beingHeld = true;
 		physicsBody.isKinematic = true;
@@ -66,7 +68,7 @@ public class ShipPart : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter(Collider other) {
-		if (other.gameObject == player.gameObject)  inRange = true;
+		if (other.gameObject == player.gameObject) inRange = true;
 	}
 
 	private void OnTriggerExit(Collider other) {
