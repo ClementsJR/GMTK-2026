@@ -3441,6 +3441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Level1Controller
   gameplayRoots:
   - {fileID: 997528614}
+  - {fileID: 309263744}
   MinigameList:
   - MG1
   - 
