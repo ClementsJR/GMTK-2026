@@ -77,7 +77,7 @@ public class SplashScreensController : MonoBehaviour, ISceneInitializable
 
             // Set image
             if (m_imgSplashImage != null)
-                //m_imgSplashImage.preserveAspect = true;
+                m_imgSplashImage.preserveAspect = true;
                 m_imgSplashImage.sprite = entry.image;
 
 
