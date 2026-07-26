@@ -10,6 +10,12 @@ public class InteractableDetector : MonoBehaviour {
 		this.player = player;
 	}
 
+	public ShipPart GetInteractable() {
+		var numParts = interactables.Count;
+		if (numParts == 0) return null;
+		else return interactables[numParts-1].GetComponentInParent<ShipPart>();
+	}
+
 	private void OnCollisionEnter(Collision collision) {
 		interactables.Add(collision.collider);
 	}
