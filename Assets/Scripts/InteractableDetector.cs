@@ -14,8 +14,9 @@ public class InteractableDetector : MonoBehaviour {
 		var numParts = interactables.Count;
 		if (numParts == 0) return null;
 		else {
-			//ShipPart part = interactables[numParts - 1].GetComponentInParent<ShipPart>();
-			return interactables[numParts - 1];
+			ShipPart part = interactables[numParts - 1];
+			interactables.Remove(part);
+			return part;
 		}
 	}
 
@@ -25,7 +26,6 @@ public class InteractableDetector : MonoBehaviour {
 	}
 
 	private void OnTriggerExit(Collider other) {
-
 		ShipPart part = other.GetComponentInParent<ShipPart>();
 		if (part != null) interactables.Remove(part);
 	}

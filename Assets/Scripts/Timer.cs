@@ -13,6 +13,8 @@ public class Timer : MonoBehaviour {
     public List<string> eventMethods;
     public List<float> eventTimes;
 
+    private bool levelOver = false;
+
     void Start() {
         UpdateTimerDisplay();
         
@@ -22,11 +24,18 @@ public class Timer : MonoBehaviour {
 	}
 
     void Update() {
-        time -= Time.deltaTime;
-		UpdateTimerDisplay();
-        if (time <= 0) {
-            // Blast off
-        }
+        if (time <= 0 && !levelOver) {
+            levelOver = true;
+            player.DisableMovement();
+            if (ship.AllReattached()) {
+                LevelSuccess();
+            } else {
+                LevelFail();
+            }
+        } else if (time > 0) {
+			time -= Time.deltaTime;
+			UpdateTimerDisplay();
+		}
     }
 
     private void UpdateTimerDisplay() {
@@ -47,5 +56,14 @@ public class Timer : MonoBehaviour {
 
     public void HideStageDirection() {
 		stageDIrectionLabel.text = "";
+	}
+
+    private void LevelSuccess() {
+		stageDIrectionLabel.text = "We're blasting off!";
+        player.gameObject.SetActive(false);
+	}
+
+    private void LevelFail() {
+		stageDIrectionLabel.text = "The ship left without us!";
 	}
 }
