@@ -22,6 +22,9 @@ public class Timer : MonoBehaviour {
         for (int i = 0; i < eventMethods.Count; i++) {
             Invoke(eventMethods[i], eventTimes[i]);
         }
+
+        var difficulty = 1;
+        time = (15 * difficulty) + 5;
 	}
 
     void Update() {
