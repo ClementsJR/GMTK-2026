@@ -23,7 +23,7 @@ public class SampleSceneController : MonoBehaviour, ISceneInitializable, IPausab
         if (InputManager.Current.JumpPressed)
         {
 
-            SceneTransitionManager.Instance.LoadMinigame(MinigameToLoad);
+            SceneTransitionManager.Instance.LoadMinigame(MinigameToLoad, OnMinigameFinished);
 
         }
     }
@@ -68,4 +68,17 @@ public class SampleSceneController : MonoBehaviour, ISceneInitializable, IPausab
         }
 
     }
+
+    private void OnMinigameFinished(MinigameResult result)
+    {
+        if (result.Success)
+        {
+            Debug.Log("Player won!");
+        }
+        else
+        {
+            Debug.Log("Player lost!");
+        }
+    }
+
 }
