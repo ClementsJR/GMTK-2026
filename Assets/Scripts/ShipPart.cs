@@ -66,11 +66,11 @@ public class ShipPart : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter(Collider other) {
-		if (other == bodyCollider)  inRange = true;
+		if (other.gameObject == player.gameObject)  inRange = true;
 	}
 
 	private void OnTriggerExit(Collider other) {
-		if (other == bodyCollider) inRange = false;
+		if (other.gameObject == player.gameObject) inRange = false;
 	}
 
 	public bool IsReattached() {
