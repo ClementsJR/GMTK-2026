@@ -1,22 +1,23 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class Timer : MonoBehaviour {
 
-    public float time = 20f;
-    public float timeToExplosion = 5f;
-    public float workTime = 10f;
-    private bool exploded = false;
-    private bool partsSettled = false;
+	public Ship ship;
+    public Player player;
+	public TextMeshProUGUI timerLabel;
 
-    public Ship ship;
-    public TextMeshProUGUI timerLabel;
+	public float time = 15f;
+    public List<string> eventMethods;
+    public List<float> eventTimes;
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
         UpdateTimerDisplay();
-
+        
+        for (int i = 0; i < eventMethods.Count; i++) {
+            Invoke(eventMethods[i], eventTimes[i]);
+        }
 	}
 
     void Update() {
@@ -25,20 +26,18 @@ public class Timer : MonoBehaviour {
         if (time <= 0) {
             // Blast off
         }
-
-        if (time <= workTime && !partsSettled) {
-            partsSettled = true;
-            ship.SettleParts();
-        }
-
-        timeToExplosion -= Time.deltaTime;
-        if (timeToExplosion <= 0 && !exploded) {
-            ship.ExplodeParts();
-            exploded = true;
-        }
     }
 
     private void UpdateTimerDisplay() {
 		timerLabel.text = time.ToString("00");
 	}
+
+    public void ExplodeParts() {
+        ship.ExplodeParts();
+    }
+
+    public void StartRound() {
+        ship.SettleParts();
+        player.EnableMovement();
+    }
 }

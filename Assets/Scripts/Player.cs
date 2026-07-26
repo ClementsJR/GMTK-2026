@@ -1,16 +1,31 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
-{
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+public class Player : MonoBehaviour {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private bool acceptInput = false;
+	private InteractableDetector detector;
+
+	private void Start() {
+		detector = GetComponentInChildren<InteractableDetector>();
+		detector.RegisterPlayer(this);
+	}
+
+
+
+	public void EnableMovement() {
+        acceptInput = true;
+	}
+
+	public void DisableMovement() {
+		acceptInput = false;
+	}
+
+	public void Move() {
+	}
+
+	public void Interact() {
+
+	}
 }
