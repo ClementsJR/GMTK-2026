@@ -15,14 +15,34 @@ public class CableInteraction : MonoBehaviour
     [SerializeField] Transform[] destinationPositions;
     [SerializeField] private List<GameObject> destinations;
     public UnityEvent onConnectionsComplete;
+    //private GameObject InteractCast()
+    //{
+    //    Vector2 screenPosition = Mouse.current.position.ReadValue();
+    //    Ray ray = Camera.main.ScreenPointToRay(screenPosition);
+    //    if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+    //    {
+    //        Debug.Log("HIT");
+    //        return hit.collider.gameObject;
+    //    }
+    //    return null;
+    //}
+
     private GameObject InteractCast()
     {
-        Vector2 screenPosition = Mouse.current.position.ReadValue();
-        Ray ray = Camera.main.ScreenPointToRay(screenPosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+        Vector2 screenPosition = InputManager.Current.MouseScreenPosition;
+
+        if (Camera.current == null)
         {
+            return null;   
+        }
+        Ray ray = Camera.current.ScreenPointToRay(screenPosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            Debug.Log("HIT" + hit.collider.gameObject.name);
             return hit.collider.gameObject;
         }
+
         return null;
     }
 
@@ -87,13 +107,13 @@ public class CableInteraction : MonoBehaviour
 
     void Update()
     {
-        if (actionRef.action.WasPerformedThisFrame())
+        if (InputManager.Current.MousePressed)
         {
             GameObject hitObject = InteractCast();
             if (hitObject != null)
             {
                 LineRenderer hitLineRenderer = hitObject.GetComponent<LineRenderer>();
-
+                Debug.Log("GOT LINE RENDERER");
                 if (hitLineRenderer != null)
                 {
                     activeLineRenderer = hitLineRenderer;
@@ -110,6 +130,7 @@ public class CableInteraction : MonoBehaviour
             activeLineRenderer.SetPosition(0, activeLineRenderer.gameObject.transform.position);
             Vector3 cursorPos = Mouse.current.position.ReadValue();
             cursorPos.z = distanceFromCamera;
+            cursorPos = InputManager.Current.MouseScreenPosition;
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(cursorPos);
             activeLineRenderer.SetPosition(1, mouseWorldPos);
         }

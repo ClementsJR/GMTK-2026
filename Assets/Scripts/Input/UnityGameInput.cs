@@ -20,6 +20,9 @@ public class UnityGameInput : MonoBehaviour, IGameInput
     public bool CancelPressed => actions.Global.Cancel.WasPressedThisFrame();
     public bool CancelHeld => actions.Global.Cancel.IsPressed();
 
+    public bool MousePressed => actions.Gameplay.MouseClick.WasPressedThisFrame();
+    public bool MouseHeld => actions.Gameplay.MouseClick.IsPressed();
+
     public bool UsingController { get; private set; }
 
     void Awake()

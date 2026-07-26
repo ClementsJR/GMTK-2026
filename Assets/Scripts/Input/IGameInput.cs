@@ -15,4 +15,7 @@ public interface IGameInput
 
     bool CancelPressed { get; }
     bool CancelHeld { get; }
+
+    bool MousePressed { get; }
+    bool MouseHeld { get; }
 }
