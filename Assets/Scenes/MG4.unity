@@ -612,6 +612,8 @@ MonoBehaviour:
   onMessCleaned:
     m_PersistentCalls:
       m_Calls: []
+  Width: 500
+  Height: 500
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

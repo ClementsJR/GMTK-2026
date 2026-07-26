@@ -8,8 +8,8 @@ public class MessSpawner : MonoBehaviour
     public GameObject messPrefab;
     [SerializeField] private int numOfMessesToSpawn;
     public UnityEvent onMessCleaned;
-    private float Width = Screen.width;
-    private float Height = Screen.height;
+    public float Width;
+    public float Height;
 
     public void checkRemainingMess()
     {
