@@ -64,6 +64,7 @@ public class ShipPart : MonoBehaviour {
 		} else {
 			physicsBody.transform.position = targetPosition;
 			reattached = true;
+			StartMiniGame();
 		}
 	}
 
@@ -77,5 +78,9 @@ public class ShipPart : MonoBehaviour {
 
 	public bool IsReattached() {
 		return reattached;
+	}
+
+	private void StartMiniGame() {
+
 	}
 }
