@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShipPart : MonoBehaviour {
@@ -6,15 +7,17 @@ public class ShipPart : MonoBehaviour {
 	private Vector3 targetPosition;
 	private Rigidbody physicsBody;
 	private bool beingHeld = false;
+	private bool inRange = false;
+	private bool reattached = false;
 	private Player player;
 
 	public Collider bodyCollider;
 	public Collider targetCollider;
 
 	void Start() {
-		targetRotation = transform.eulerAngles;
-		targetPosition = transform.position;
 		physicsBody = GetComponentInChildren<Rigidbody>();
+		targetRotation = physicsBody.transform.eulerAngles;
+		targetPosition = physicsBody.transform.position;
 	}
 
 	private void FixedUpdate() {
@@ -40,6 +43,8 @@ public class ShipPart : MonoBehaviour {
 	}
 
 	public void PickUp(Player player) {
+		if (reattached) return;
+
 		this.player = player;
 		beingHeld = true;
 		physicsBody.isKinematic = true;
@@ -51,8 +56,31 @@ public class ShipPart : MonoBehaviour {
 
 	public void Drop() {
 		beingHeld = false;
-		physicsBody.isKinematic = false;
-		bodyCollider.enabled = true;
 		targetCollider.enabled = false;
+
+		if (!inRange) {
+			physicsBody.isKinematic = false;
+			bodyCollider.enabled = true;
+		} else {
+			physicsBody.transform.position = targetPosition;
+			reattached = true;
+			StartMiniGame();
+		}
+	}
+
+	private void OnTriggerEnter(Collider other) {
+		if (other.gameObject == player.gameObject) inRange = true;
+	}
+
+	private void OnTriggerExit(Collider other) {
+		if (other.gameObject == player.gameObject) inRange = false;
+	}
+
+	public bool IsReattached() {
+		return reattached;
+	}
+
+	private void StartMiniGame() {
+
 	}
 }
