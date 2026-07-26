@@ -8,7 +8,7 @@ public class Player : MonoBehaviour {
 
     public float moveSpeed = 2f;
     public float jumpForce = 6f;
-    public Vector3 handPosition;
+    public Vector3 handPosition = Vector3.up;
 
     private InteractableDetector detector;
     private Rigidbody rb;

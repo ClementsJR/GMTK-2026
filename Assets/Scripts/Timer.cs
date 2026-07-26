@@ -7,6 +7,7 @@ public class Timer : MonoBehaviour {
 	public Ship ship;
     public Player player;
 	public TextMeshProUGUI timerLabel;
+	public TextMeshProUGUI stageDIrectionLabel;
 
 	public float time = 15f;
     public List<string> eventMethods;
@@ -34,10 +35,17 @@ public class Timer : MonoBehaviour {
 
     public void ExplodeParts() {
         ship.ExplodeParts();
+        stageDIrectionLabel.text = "Oh no! It's falling apart!";
     }
 
     public void StartRound() {
         ship.SettleParts();
+        player.gameObject.SetActive(true);
         player.EnableMovement();
-    }
+		stageDIrectionLabel.text = "Fix it fast!";
+	}
+
+    public void HideStageDirection() {
+		stageDIrectionLabel.text = "";
+	}
 }
