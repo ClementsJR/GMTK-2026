@@ -1,30 +1,91 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
+using Unity.VisualScripting;
+using System.Collections.Generic;
 
-public class Level1Controller : MonoBehaviour, ISceneInitializable
+public class Level1Controller : MonoBehaviour, ISceneInitializable, IPausableGameplay
 {
 
-    [SerializeField] private string m_sNextSceneName = "hiJohn -- uWu";
+    [SerializeField] private GameObject[] gameplayRoots;
+
+    [SerializeField] private List<string> MinigameList = new();
+
+
+    private bool _isPaused;
 
 
 
+    void Start()
+    {
 
-    //IEnumerator NewGameStart()
-    //{
+    }
 
-    //    DebugManager.Log(this, "Starting new game in scene -- " + m_sNextSceneName);
-    //    SceneTransitionManager.Instance.FadeLoadingScene(m_sNextSceneName, true);
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 
-    //    yield return null;
-    //}
+    public void LaunchMinigame(int minigameNumber)
+    {
 
+
+        SceneTransitionManager.Instance.LoadMinigame(MinigameList[minigameNumber], OnMinigameFinished);
+
+
+    }
 
     public IEnumerator Initialize()
     {
         yield return null;
 
         yield return FadeManager.Instance.FadeInCoroutine();
+    }
+
+    public void PauseGameplay()
+    {
+
+        if (_isPaused)
+            return;
+
+        _isPaused = true;
+
+        foreach (GameObject root in gameplayRoots)
+        {
+            if (root != null)
+                root.SetActive(false);
+        }
+
+    }
+
+    public void ResumeGameplay()
+    {
+
+        Debug.Log("UNPAUSING");
+
+        if (!_isPaused)
+            return;
+
+        _isPaused = false;
+
+        foreach (GameObject root in gameplayRoots)
+        {
+            if (root != null)
+                root.SetActive(true);
+        }
+
+    }
+
+    private void OnMinigameFinished(MinigameResult result)
+    {
+        if (result.Success)
+        {
+            Debug.Log("Player won!");
+        }
+        else
+        {
+            Debug.Log("Player lost!");
+        }
     }
 
 }
