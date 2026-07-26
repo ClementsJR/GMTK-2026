@@ -1194,7 +1194,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   moveSpeed: 2
   jumpForce: 6
-  detector: {fileID: 1836872826}
 --- !u!54 &997528620
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1515,6 +1514,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4beda9c87c09de34da01b61a9ac332ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShipPart
+  bodyCollider: {fileID: 8362715562069086283}
+  targetCollider: {fileID: 0}
 --- !u!1 &1321409923
 GameObject:
   m_ObjectHideFlags: 0
@@ -2672,6 +2673,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4beda9c87c09de34da01b61a9ac332ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShipPart
+  bodyCollider: {fileID: 1321409924}
+  targetCollider: {fileID: 0}
 --- !u!4 &1901517326
 Transform:
   m_ObjectHideFlags: 0
@@ -3117,7 +3120,7 @@ GameObject:
   - component: {fileID: 543450652332801924}
   - component: {fileID: 693338514}
   m_Layer: 0
-  m_Name: RocketSeperatedParts
+  m_Name: Rocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
